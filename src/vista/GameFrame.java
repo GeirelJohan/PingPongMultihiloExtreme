@@ -9,6 +9,7 @@ package vista;
  * @author Geirel
  */
 import javax.swing.JFrame;
+import java.awt.BorderLayout;
 
 public class GameFrame extends JFrame{
     
@@ -20,5 +21,12 @@ public class GameFrame extends JFrame{
         setResizable(false);
         
         add(new GamePanel());
+        add(new GamePanel(), BorderLayout.CENTER);
+        
+        setLayout(new BorderLayout());
+
+        add(new TopPanel(), BorderLayout.NORTH);
+        add(new GamePanel(), BorderLayout.CENTER);
+        add(new BottomPanel(), BorderLayout.SOUTH);
     }
 }
