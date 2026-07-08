@@ -10,7 +10,7 @@ package vista;
  */
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-
+import controlador.KeyboardController;
 
 public class GameFrame extends JFrame{
     
@@ -24,21 +24,36 @@ public class GameFrame extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        
-        add(new GamePanel());
-        add(new GamePanel(), BorderLayout.CENTER);
-        
         setLayout(new BorderLayout());
         
-        add(new TopPanel(jugador1, jugador2), BorderLayout.NORTH);
-        add(new GamePanel(), BorderLayout.CENTER);
-        
+        //Creacion de los paneles principales
         topPanel = new TopPanel(jugador1, jugador2);
         gamePanel = new GamePanel();
         bottomPanel = new BottomPanel();
 
+        //Agrega los paneles en sus respectivas posiciones
         add(topPanel, BorderLayout.NORTH);
         add(gamePanel, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
+        
+        KeyboardController keyboardController = new KeyboardController();
+
+        addKeyListener(keyboardController);
+
+        setFocusable(true);
+        requestFocusInWindow();
+        
+        //Evento del boton Iniciar
+        bottomPanel.addIniciarListener(e -> {
+            System.out.println("Boton Iniciar presionado");
+        });
+        //Evento del boton Pausar
+        bottomPanel.addPausarListener(e -> {
+            System.out.println("Boton Pausar presionado");
+        });
+        //Evento del boton Reiniciar
+        bottomPanel.addReiniciarListener(e -> {
+            System.out.println("Boton Reiniciar presionado");
+        });
     }
 }

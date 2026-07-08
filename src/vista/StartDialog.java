@@ -14,13 +14,18 @@ import javax.swing.*;
 
 public class StartDialog extends JDialog{
     
+    //Campos de texto para los 2 nombres
     private JTextField txtJugador1;
     private JTextField txtJugador2;
+    
+    //Seleccion de la dificultad
     private JComboBox<String> cmbDificultad;
+    
+    //Boton para iniciar
     private JButton btnIniciar;
-
     private boolean iniciar = false;
-
+    
+    //Configuracion de la vantana de inicio
     public StartDialog(JFrame parent) {
         super(parent, "Nueva Partida", true);
 
@@ -48,7 +53,10 @@ public class StartDialog extends JDialog{
 
         panelCentro.add(cmbDificultad);
         add(panelCentro, BorderLayout.CENTER);
+        
+        //Crea el boton para iniciar la partida
         btnIniciar = new JButton("Iniciar");
+        //Accion que se ejecuta al presionar el boton
         btnIniciar.addActionListener(e -> {
             if (txtJugador1.getText().isBlank() ||
                 txtJugador2.getText().isBlank()) {
@@ -63,6 +71,8 @@ public class StartDialog extends JDialog{
         });
         add(btnIniciar, BorderLayout.SOUTH);
     }
+    
+    //Getters
     public boolean isIniciar() {
         return iniciar;
     }

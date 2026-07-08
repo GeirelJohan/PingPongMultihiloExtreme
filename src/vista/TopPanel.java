@@ -17,12 +17,14 @@ import javax.swing.JPanel;
 
 public class TopPanel extends JPanel{
     
+    //Atributos
     private JLabel lblJugador1;
     private JLabel lblPuntos1;
     private JLabel lblTiempo;
     private JLabel lblJugador2;
     private JLabel lblPuntos2;
     
+    //Constructor
     public TopPanel(String jugador1, String jugador2) {
 
         setBackground(Color.DARK_GRAY);
@@ -31,33 +33,35 @@ public class TopPanel extends JPanel{
 
         Font fuente = new Font("Arial", Font.BOLD, 16);
 
+        //Nombre del jugador 1
         lblJugador1 = new JLabel(jugador1);
         lblJugador1.setForeground(Color.WHITE);
         lblJugador1.setFont(fuente);
-
+        //Puntaje del juagdor 2
         lblPuntos1 = new JLabel("Puntos: 0");
         lblPuntos1.setForeground(Color.WHITE);
         lblPuntos1.setFont(fuente);
-
+        //Tiempo restante del juego
         lblTiempo = new JLabel("Tiempo: 60");
         lblTiempo.setForeground(Color.YELLOW);
         lblTiempo.setFont(fuente);
-
+        //Nombre del jugador 2
         lblJugador2 = new JLabel(jugador2);
         lblJugador2.setForeground(Color.WHITE);
         lblJugador2.setFont(fuente);
-
+        //Puntaje del juagdor 1
         lblPuntos2 = new JLabel("Puntos: 0");
         lblPuntos2.setForeground(Color.WHITE);
         lblPuntos2.setFont(fuente);
 
+        //Agrega las etiquetas al panel
         add(lblJugador1);
         add(lblPuntos1);
         add(lblTiempo);
         add(lblJugador2);
         add(lblPuntos2);
     }
-    
+    //Actualizar los puntos de cada jugador ademas del tiempo restante
     public void actualizarPuntosJugador1(int puntos) {
     lblPuntos1.setText("Puntos: " + puntos);
     }
