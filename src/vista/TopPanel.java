@@ -23,7 +23,7 @@ public class TopPanel extends JPanel{
     private JLabel lblJugador2;
     private JLabel lblPuntos2;
     
-    public TopPanel() {
+    public TopPanel(String jugador1, String jugador2) {
 
         setBackground(Color.DARK_GRAY);
         setPreferredSize(new Dimension(900, 70));
@@ -31,7 +31,7 @@ public class TopPanel extends JPanel{
 
         Font fuente = new Font("Arial", Font.BOLD, 16);
 
-        lblJugador1 = new JLabel("Jugador 1");
+        lblJugador1 = new JLabel(jugador1);
         lblJugador1.setForeground(Color.WHITE);
         lblJugador1.setFont(fuente);
 
@@ -43,7 +43,7 @@ public class TopPanel extends JPanel{
         lblTiempo.setForeground(Color.YELLOW);
         lblTiempo.setFont(fuente);
 
-        lblJugador2 = new JLabel("Jugador 2");
+        lblJugador2 = new JLabel(jugador2);
         lblJugador2.setForeground(Color.WHITE);
         lblJugador2.setFont(fuente);
 
@@ -56,5 +56,15 @@ public class TopPanel extends JPanel{
         add(lblTiempo);
         add(lblJugador2);
         add(lblPuntos2);
+    }
+    
+    public void actualizarPuntosJugador1(int puntos) {
+    lblPuntos1.setText("Puntos: " + puntos);
+    }
+    public void actualizarPuntosJugador2(int puntos) {
+        lblPuntos2.setText("Puntos: " + puntos);
+    }
+    public void actualizarTiempo(int tiempo) {
+        lblTiempo.setText("Tiempo: " + tiempo);
     }
 }

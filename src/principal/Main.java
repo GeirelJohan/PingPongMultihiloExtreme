@@ -16,13 +16,15 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GameFrame frame = new GameFrame();
-            StartDialog dialog = new StartDialog(frame);
+            StartDialog dialog = new StartDialog(null);
             dialog.setVisible(true);
-            if(dialog.isIniciar()){
+            if (dialog.isIniciar()) {
+                GameFrame frame = new GameFrame(
+                        dialog.getJugador1(),
+                        dialog.getJugador2()
+                );
                 frame.setVisible(true);
             }
         });
     }
-
 }

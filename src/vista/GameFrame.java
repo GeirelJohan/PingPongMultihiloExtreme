@@ -13,7 +13,7 @@ import java.awt.BorderLayout;
 
 public class GameFrame extends JFrame{
     
-    public GameFrame() {
+    public GameFrame(String jugador1, String jugador2) {
         setTitle("Ping Pong Multihilo Extreme");
         setSize(900, 600);
         setLocationRelativeTo(null);
@@ -25,7 +25,7 @@ public class GameFrame extends JFrame{
         
         setLayout(new BorderLayout());
 
-        add(new TopPanel(), BorderLayout.NORTH);
+        add(new TopPanel(jugador1, jugador2), BorderLayout.NORTH);
         add(new GamePanel(), BorderLayout.CENTER);
         add(new BottomPanel(), BorderLayout.SOUTH);
     }
