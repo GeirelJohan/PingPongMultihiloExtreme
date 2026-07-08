@@ -11,7 +11,12 @@ package vista;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 
+
 public class GameFrame extends JFrame{
+    
+    private BottomPanel bottomPanel;
+    private TopPanel topPanel;
+    private GamePanel gamePanel;
     
     public GameFrame(String jugador1, String jugador2) {
         setTitle("Ping Pong Multihilo Extreme");
@@ -24,9 +29,16 @@ public class GameFrame extends JFrame{
         add(new GamePanel(), BorderLayout.CENTER);
         
         setLayout(new BorderLayout());
-
+        
         add(new TopPanel(jugador1, jugador2), BorderLayout.NORTH);
         add(new GamePanel(), BorderLayout.CENTER);
-        add(new BottomPanel(), BorderLayout.SOUTH);
+        
+        topPanel = new TopPanel(jugador1, jugador2);
+        gamePanel = new GamePanel();
+        bottomPanel = new BottomPanel();
+
+        add(topPanel, BorderLayout.NORTH);
+        add(gamePanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
     }
 }
