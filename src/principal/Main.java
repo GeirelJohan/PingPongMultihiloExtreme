@@ -8,13 +8,23 @@ package principal;
  *
  * @author Geirel
  */
+import javax.swing.SwingUtilities;
+import vista.GameFrame;
+import vista.StartDialog;
+
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        SwingUtilities.invokeLater(() -> {
+            StartDialog dialog = new StartDialog(null); //Ventana de inicio
+            dialog.setVisible(true); //Hace visible el dialogo
+            if (dialog.isIniciar()) { //Comprueba si se cerro la ventana o se presiono el boton
+                GameFrame frame = new GameFrame( //Crea la ventana del juego
+                        dialog.getJugador1(),
+                        dialog.getJugador2() //Y agrega los nombres
+                );
+                frame.setVisible(true);
+            }
+        });
     }
-    
 }
