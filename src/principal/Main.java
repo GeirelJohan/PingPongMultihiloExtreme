@@ -10,12 +10,19 @@ package principal;
  */
 import javax.swing.SwingUtilities;
 import vista.GameFrame;
+import vista.StartDialog;
 
 public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new GameFrame().setVisible(true);
+            GameFrame frame = new GameFrame();
+            StartDialog dialog = new StartDialog(frame);
+            dialog.setVisible(true);
+            if(dialog.isIniciar()){
+                frame.setVisible(true);
+            }
         });
     }
+
 }
