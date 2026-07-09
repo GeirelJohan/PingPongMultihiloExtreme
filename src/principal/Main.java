@@ -16,13 +16,10 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            StartDialog dialog = new StartDialog(null); //Ventana de inicio
-            dialog.setVisible(true); //Hace visible el dialogo
-            if (dialog.isIniciar()) { //Comprueba si se cerro la ventana o se presiono el boton
-                GameFrame frame = new GameFrame( //Crea la ventana del juego
-                        dialog.getJugador1(),
-                        dialog.getJugador2() //Y agrega los nombres
-                );
+            StartDialog dialog = new StartDialog(null, true);
+            dialog.setVisible(true);
+            if (dialog.isIniciar()) {
+                GameFrame frame = new GameFrame();
                 frame.setVisible(true);
             }
         });
