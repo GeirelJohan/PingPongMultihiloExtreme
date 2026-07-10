@@ -3,24 +3,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package vista;
+import modelo.Paleta;
+import java.awt.Graphics;
 
 /**
  *
  * @author Geirel
  */
-import java.awt.Graphics;
+
 
 public class GamePanel extends javax.swing.JPanel {
 
+    private Paleta paletaIzquierda;
+    private Paleta paletaDerecha;
     /**
      * Creates new form GamePanelñ
      */
     public GamePanel() {
         initComponents();
+        
+        paletaIzquierda = new Paleta(20, 180);
+        paletaDerecha = new Paleta(865, 180);
+        
+        
+        setFocusable(true);
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        
+        paletaIzquierda.dibujar(g);
+        paletaDerecha.dibujar(g);
     }
 
     /**
@@ -46,7 +60,13 @@ public class GamePanel extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    public Paleta getPaletaIzquierda(){
+        return paletaIzquierda;
+    }
+    
+    public Paleta getPletaDerecha(){
+        return paletaDerecha;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
