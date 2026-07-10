@@ -22,7 +22,7 @@ public class Bola extends Thread {
     private int velocidadX;
     private int velocidadY;
 
-    private Color color;
+    protected Color color;
 
     private boolean activa;
 
@@ -204,6 +204,10 @@ public class Bola extends Thread {
 
     }
 
+    public String getTipo(){
 
+    return "Normal";
+
+    }
 
 }
