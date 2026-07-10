@@ -5,7 +5,7 @@
 package vista;
 import modelo.Paleta;
 import java.awt.Graphics;
-
+import modelo.Bola;
 /**
  *
  * @author Geirel
@@ -16,6 +16,7 @@ public class GamePanel extends javax.swing.JPanel {
 
     private Paleta paletaIzquierda;
     private Paleta paletaDerecha;
+    private Bola bola;
     /**
      * Creates new form GamePanelñ
      */
@@ -24,7 +25,7 @@ public class GamePanel extends javax.swing.JPanel {
         
         paletaIzquierda = new Paleta(20, 180);
         paletaDerecha = new Paleta(865, 180);
-        
+        bola = new Bola(440, 225);
         
         setFocusable(true);
     }
@@ -35,6 +36,7 @@ public class GamePanel extends javax.swing.JPanel {
         
         paletaIzquierda.dibujar(g);
         paletaDerecha.dibujar(g);
+        bola.dibujar(g);
     }
 
     /**
