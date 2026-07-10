@@ -34,12 +34,12 @@ public class GameFrame extends javax.swing.JFrame {
         gameContainer.add(gamePanel);
         bottomContainer.add(bottomPanel);
 
-        KeyboardController keyboardController = new KeyboardController();
+        KeyboardController keyboardController = new KeyboardController(gamePanel);
 
-        addKeyListener(keyboardController);
+        gamePanel.addKeyListener(keyboardController);
 
-        setFocusable(true);
-        requestFocusInWindow();
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow();
 
         setLocationRelativeTo(null);
     }
@@ -104,8 +104,6 @@ public class GameFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(bottomContainer, java.awt.BorderLayout.PAGE_END);
-
-        gameContainer.setForeground(java.awt.Color.black);
 
         javax.swing.GroupLayout gameContainerLayout = new javax.swing.GroupLayout(gameContainer);
         gameContainer.setLayout(gameContainerLayout);

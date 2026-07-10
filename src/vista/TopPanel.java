@@ -87,6 +87,21 @@ public class TopPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+public void actualizarJugador1(String nombre){
+    lblJugador1.setText(nombre);
+}
+public void actualizarJugador2(String nombre) {
+    lblJugadore2.setText(nombre);
+}
+public void actualizarPuntos(int puntos){
+    lblPuntos1.setText("Puntos: " + puntos);
+}
+public void actualizarPuntos2(int  puntos){
+    lblPuntos2.setText("Puntos: " + puntos);
+}
+public void actualizarTiempo(int tiempo){
+    lblTiempo.setText("Tiempo: " + tiempo);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblJugador1;
