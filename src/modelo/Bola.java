@@ -11,7 +11,7 @@ package modelo;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Bola implements Runnable {
+public class Bola {
 
     private int x;
     private int y;
@@ -22,7 +22,6 @@ public class Bola implements Runnable {
 
     private Color color;
 
-    private boolean activa;
 
     public Bola(int x, int y) {
 
@@ -35,75 +34,82 @@ public class Bola implements Runnable {
         velocidadY = 4;
 
         color = Color.WHITE;
-
-        activa = true;
     }
 
-    public void mover() {
 
-        x += velocidadX;
-        y += velocidadY;
+public void mover(Paleta izquierda, Paleta derecha, int anchoPanel, int altoPanel) {
 
-    }
+    // Movimiento
+    x += velocidadX;
+    y += velocidadY;
 
-    @Override
-    public void run() {
 
-        while (activa) {
+    // Rebote arriba
+    if (y <= 0) {
 
-            mover();
-
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
+        y = 0;
+        velocidadY = Math.abs(velocidadY);
 
     }
 
-    public void detener() {
-        activa = false;
+
+    // Rebote abajo
+    if (y >= altoPanel - diametro) {
+
+        y = altoPanel - diametro;
+        velocidadY = -Math.abs(velocidadY);
+
     }
+
+
+
+    // Rebote con paleta izquierda
+    if (velocidadX < 0 &&
+            x <= izquierda.getX() + izquierda.getAncho() &&
+            x + diametro >= izquierda.getX() &&
+            y + diametro >= izquierda.getY() &&
+            y <= izquierda.getY() + izquierda.getAlto()) {
+
+
+        x = izquierda.getX() + izquierda.getAncho();
+        velocidadX = Math.abs(velocidadX);
+
+    }
+
+
+
+    // Rebote con paleta derecha
+    if (velocidadX > 0 &&
+            x + diametro >= derecha.getX() &&
+            x <= derecha.getX() + derecha.getAncho() &&
+            y + diametro >= derecha.getY() &&
+            y <= derecha.getY() + derecha.getAlto()) {
+
+
+        x = derecha.getX() - diametro;
+        velocidadX = -Math.abs(velocidadX);
+
+    }
+
+
+
+    // Si sale por los lados reinicia
+    if (x < 0 || x > anchoPanel) {
+
+        x = anchoPanel / 2;
+        y = altoPanel / 2;
+
+    }
+
+}
+
+
 
     public void dibujar(Graphics g) {
 
         g.setColor(color);
         g.fillOval(x, y, diametro, diametro);
 
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getDiametro() {
-        return diametro;
-    }
-
-    public int getVelocidadX() {
-        return velocidadX;
-    }
-
-    public int getVelocidadY() {
-        return velocidadY;
-    }
-
-    public void setVelocidadX(int velocidadX) {
-        this.velocidadX = velocidadX;
-    }
-
-    public void setVelocidadY(int velocidadY) {
-        this.velocidadY = velocidadY;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
 }

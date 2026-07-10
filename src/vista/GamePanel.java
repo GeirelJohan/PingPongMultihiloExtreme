@@ -23,21 +23,35 @@ public class GamePanel extends javax.swing.JPanel {
      * Creates new form GamePanelñ
      */
     public GamePanel() {
-        initComponents();
-        
-        paletaIzquierda = new Paleta(20, 180);
-        paletaDerecha = new Paleta(865, 180);
-        bola = new Bola(440, 225);
-        
-        Thread hiloBola = new Thread(bola);
-        hiloBola.start();
-        
-        timer = new Timer(20, e -> repaint());
-        timer.start();
-        
-        setFocusable(true);
-    }
-    @Override
+
+    initComponents();
+
+    setPreferredSize(new java.awt.Dimension(900,470));
+    setSize(900,470);
+
+    paletaIzquierda = new Paleta(20,180);
+    paletaDerecha = new Paleta(865,180);
+    bola = new Bola(440,225);
+
+
+    timer = new Timer(15, e -> {
+
+        bola.mover(
+            paletaIzquierda,
+            paletaDerecha,
+            900,
+            420
+        );
+
+        repaint();
+
+    });
+
+
+    timer.start();
+
+    setFocusable(true);
+}    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         
@@ -80,4 +94,17 @@ public class GamePanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
+
+   @Override
+   public void addNotify(){
+
+    super.addNotify();
+
+    timer.start();
+
+ } 
+}    
+    
+    
+
+
