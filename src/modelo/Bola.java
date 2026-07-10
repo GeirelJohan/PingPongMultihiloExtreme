@@ -19,8 +19,8 @@ public class Bola extends Thread {
 
     private int diametro;
 
-    private int velocidadX;
-    private int velocidadY;
+    protected int velocidadX;
+    protected int velocidadY;
 
     protected Color color;
 
@@ -33,7 +33,7 @@ public class Bola extends Thread {
     private int anchoPanel;
     private int altoPanel;
 
-
+    protected int puntos;
 
     public Bola(int x, int y) {
 
@@ -47,6 +47,8 @@ public class Bola extends Thread {
 
         color = Color.WHITE;
 
+        puntos = 1;
+        
         activa = true;
 
     }
@@ -204,10 +206,35 @@ public class Bola extends Thread {
 
     }
 
+    public int getPuntos(){
+
+    return puntos;
+
+    }
+    
     public String getTipo(){
 
     return "Normal";
 
     }
+ public void aumentarVelocidad(){
 
+    velocidadX *= 2;
+    velocidadY *= 2;
+
+}
+
+
+public boolean esFantasma(){
+
+    return false;
+
+}
+
+
+public boolean esCongelante(){
+
+    return false;
+
+}
 }

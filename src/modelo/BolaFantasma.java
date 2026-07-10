@@ -23,7 +23,15 @@ public class BolaFantasma extends Bola {
 
 
     @Override
-    public String getTipo(){
+    public boolean esFantasma() {
+
+        return true;
+
+    }
+
+
+    @Override
+    public String getTipo() {
 
         return "Bola Fantasma";
 

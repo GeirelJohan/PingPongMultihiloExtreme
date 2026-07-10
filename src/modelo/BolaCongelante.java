@@ -23,7 +23,15 @@ public class BolaCongelante extends Bola {
 
 
     @Override
-    public String getTipo(){
+    public boolean esCongelante() {
+
+        return true;
+
+    }
+
+
+    @Override
+    public String getTipo() {
 
         return "Bola Congelante";
 

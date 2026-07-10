@@ -12,17 +12,19 @@ import java.awt.Color;
 
 public class BolaNormal extends Bola {
 
+
     public BolaNormal(int x, int y) {
 
         super(x, y);
 
         color = Color.WHITE;
+        puntos = 1;
 
     }
 
 
     @Override
-    public String getTipo(){
+    public String getTipo() {
 
         return "Bola Normal";
 

@@ -19,11 +19,13 @@ public class BolaRapida extends Bola {
 
         color = Color.YELLOW;
 
+        aumentarVelocidad();
+
     }
 
 
     @Override
-    public String getTipo(){
+    public String getTipo() {
 
         return "Bola Rapida";
 

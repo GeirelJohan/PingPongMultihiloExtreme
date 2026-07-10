@@ -12,17 +12,19 @@ import java.awt.Color;
 
 public class BolaNegativa extends Bola {
 
+
     public BolaNegativa(int x, int y) {
 
         super(x, y);
 
         color = Color.RED;
+        puntos = -2;
 
     }
 
 
     @Override
-    public String getTipo(){
+    public String getTipo() {
 
         return "Bola Negativa";
 
