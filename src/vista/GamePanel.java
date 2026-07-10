@@ -32,20 +32,22 @@ public class GamePanel extends javax.swing.JPanel {
     paletaIzquierda = new Paleta(20,180);
     paletaDerecha = new Paleta(865,180);
     bola = new Bola(440,225);
+    
+    bola.configurarJuego(
+        paletaIzquierda,
+        paletaDerecha,
+        900,
+        420
+);
+
+bola.start();
 
 
     timer = new Timer(15, e -> {
 
-        bola.mover(
-            paletaIzquierda,
-            paletaDerecha,
-            900,
-            420
-        );
+    repaint();
 
-        repaint();
-
-    });
+});
 
 
     timer.start();
