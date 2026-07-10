@@ -22,12 +22,24 @@ public class BolaFantasma extends Bola {
     }
 
 
+
+    public BolaFantasma(int x, int y, int velocidad) {
+
+        super(x, y, velocidad);
+
+        color = Color.MAGENTA;
+
+    }
+
+
+
     @Override
     public boolean esFantasma() {
 
         return true;
 
     }
+
 
 
     @Override

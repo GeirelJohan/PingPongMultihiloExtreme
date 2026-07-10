@@ -23,6 +23,18 @@ public class BolaNormal extends Bola {
     }
 
 
+
+    public BolaNormal(int x, int y, int velocidad) {
+
+        super(x, y, velocidad);
+
+        color = Color.WHITE;
+        puntos = 1;
+
+    }
+
+
+
     @Override
     public String getTipo() {
 

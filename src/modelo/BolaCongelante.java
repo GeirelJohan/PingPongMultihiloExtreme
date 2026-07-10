@@ -22,12 +22,24 @@ public class BolaCongelante extends Bola {
     }
 
 
+
+    public BolaCongelante(int x, int y, int velocidad) {
+
+        super(x, y, velocidad);
+
+        color = Color.CYAN;
+
+    }
+
+
+
     @Override
     public boolean esCongelante() {
 
         return true;
 
     }
+
 
 
     @Override

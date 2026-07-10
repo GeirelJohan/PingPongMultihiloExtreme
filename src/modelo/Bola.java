@@ -52,7 +52,23 @@ public class Bola extends Thread {
         activa = true;
 
     }
+    public Bola(int x, int y, int velocidad) {
 
+    this.x = x;
+    this.y = y;
+
+    diametro = 20;
+
+    velocidadX = velocidad;
+    velocidadY = velocidad;
+
+    color = Color.WHITE;
+
+    puntos = 1;
+
+    activa = true;
+
+   }
 
 
     public void configurarJuego(
@@ -100,7 +116,12 @@ public class Bola extends Thread {
     }
 
 
+    public void cambiarVelocidad(int velocidad){
 
+    velocidadX = velocidad;
+    velocidadY = velocidad;
+
+    }
 
 
     private void mover() {

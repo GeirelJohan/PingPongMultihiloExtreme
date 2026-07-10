@@ -23,6 +23,18 @@ public class BolaNegativa extends Bola {
     }
 
 
+
+    public BolaNegativa(int x, int y, int velocidad) {
+
+        super(x, y, velocidad);
+
+        color = Color.RED;
+        puntos = -2;
+
+    }
+
+
+
     @Override
     public String getTipo() {
 

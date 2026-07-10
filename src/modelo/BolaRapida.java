@@ -24,6 +24,19 @@ public class BolaRapida extends Bola {
     }
 
 
+
+    public BolaRapida(int x, int y, int velocidad) {
+
+        super(x, y, velocidad);
+
+        color = Color.YELLOW;
+
+        aumentarVelocidad();
+
+    }
+
+
+
     @Override
     public String getTipo() {
 

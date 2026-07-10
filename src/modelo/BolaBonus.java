@@ -23,6 +23,18 @@ public class BolaBonus extends Bola {
     }
 
 
+
+    public BolaBonus(int x, int y, int velocidad) {
+
+        super(x, y, velocidad);
+
+        color = Color.BLUE;
+        puntos = 2;
+
+    }
+
+
+
     @Override
     public String getTipo() {
 
