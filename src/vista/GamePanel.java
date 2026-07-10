@@ -7,7 +7,7 @@ import modelo.Paleta;
 import java.awt.Graphics;
 import modelo.Bola;
 import javax.swing.Timer;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 /**
  *
  * @author Geirel
@@ -18,7 +18,7 @@ public class GamePanel extends javax.swing.JPanel {
 
     private Paleta paletaIzquierda;
     private Paleta paletaDerecha;
-    private ArrayList<Bola> bolas;
+    private CopyOnWriteArrayList<Bola> bolas;
     private Timer timer;
     /**
      * Creates new form GamePanelñ
@@ -35,7 +35,7 @@ public class GamePanel extends javax.swing.JPanel {
     paletaDerecha = new Paleta(865,180);
 
 
-    bolas = new ArrayList<>();
+    bolas = new CopyOnWriteArrayList<>();
 
 
     Bola bola1 = new Bola(440,225);
