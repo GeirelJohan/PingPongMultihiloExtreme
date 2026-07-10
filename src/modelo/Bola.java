@@ -11,7 +11,7 @@ package modelo;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Bola {
+public class Bola implements Runnable {
 
     private int x;
     private int y;
@@ -21,6 +21,8 @@ public class Bola {
     private int velocidadY;
 
     private Color color;
+
+    private boolean activa;
 
     public Bola(int x, int y) {
 
@@ -33,6 +35,8 @@ public class Bola {
         velocidadY = 4;
 
         color = Color.WHITE;
+
+        activa = true;
     }
 
     public void mover() {
@@ -40,6 +44,27 @@ public class Bola {
         x += velocidadX;
         y += velocidadY;
 
+    }
+
+    @Override
+    public void run() {
+
+        while (activa) {
+
+            mover();
+
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    public void detener() {
+        activa = false;
     }
 
     public void dibujar(Graphics g) {

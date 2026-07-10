@@ -6,6 +6,7 @@ package vista;
 import modelo.Paleta;
 import java.awt.Graphics;
 import modelo.Bola;
+import javax.swing.Timer;
 /**
  *
  * @author Geirel
@@ -17,6 +18,7 @@ public class GamePanel extends javax.swing.JPanel {
     private Paleta paletaIzquierda;
     private Paleta paletaDerecha;
     private Bola bola;
+    private Timer timer;
     /**
      * Creates new form GamePanelñ
      */
@@ -26,6 +28,12 @@ public class GamePanel extends javax.swing.JPanel {
         paletaIzquierda = new Paleta(20, 180);
         paletaDerecha = new Paleta(865, 180);
         bola = new Bola(440, 225);
+        
+        Thread hiloBola = new Thread(bola);
+        hiloBola.start();
+        
+        timer = new Timer(20, e -> repaint());
+        timer.start();
         
         setFocusable(true);
     }
