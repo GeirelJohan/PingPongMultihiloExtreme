@@ -7,6 +7,7 @@ import modelo.Paleta;
 import java.awt.Graphics;
 import modelo.Bola;
 import javax.swing.Timer;
+import java.util.ArrayList;
 /**
  *
  * @author Geirel
@@ -17,7 +18,7 @@ public class GamePanel extends javax.swing.JPanel {
 
     private Paleta paletaIzquierda;
     private Paleta paletaDerecha;
-    private Bola bola;
+    private ArrayList<Bola> bolas;
     private Timer timer;
     /**
      * Creates new form GamePanelñ
@@ -29,40 +30,83 @@ public class GamePanel extends javax.swing.JPanel {
     setPreferredSize(new java.awt.Dimension(900,470));
     setSize(900,470);
 
+
     paletaIzquierda = new Paleta(20,180);
     paletaDerecha = new Paleta(865,180);
-    bola = new Bola(440,225);
-    
-    bola.configurarJuego(
+
+
+    bolas = new ArrayList<>();
+
+
+    Bola bola1 = new Bola(440,225);
+
+    Bola bola2 = new Bola(400,150);
+
+    bola2.configurarJuego(
+    paletaIzquierda,
+    paletaDerecha,
+    900,
+    420
+    );
+
+
+    Bola bola3 = new Bola(500,300);
+
+    bola3.configurarJuego(
+    paletaIzquierda,
+    paletaDerecha,
+    900,
+    420
+    );
+
+    bola1.configurarJuego(
         paletaIzquierda,
         paletaDerecha,
         900,
         420
-);
+    );
 
-bola.start();
+
+    bolas.add(bola1);
+    bolas.add(bola2);
+    bolas.add(bola3);
+
+    bola1.start();
+    bola2.start();
+    bola3.start();
 
 
     timer = new Timer(15, e -> {
 
-    repaint();
+        repaint();
 
-});
+    });
 
 
     timer.start();
 
+
     setFocusable(true);
-}    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        
-        
-        paletaIzquierda.dibujar(g);
-        paletaDerecha.dibujar(g);
+
+}
+    
+   @Override
+protected void paintComponent(Graphics g) {
+
+    super.paintComponent(g);
+
+
+    paletaIzquierda.dibujar(g);
+    paletaDerecha.dibujar(g);
+
+
+    for(Bola bola : bolas){
+
         bola.dibujar(g);
+
     }
 
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,17 +140,8 @@ bola.start();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
-   @Override
-   public void addNotify(){
-
-    super.addNotify();
-
-    timer.start();
-
- } 
-}    
-    
+}
+  
     
 
 
