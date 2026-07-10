@@ -10,30 +10,34 @@ package modelo;
  */
 import java.awt.Color;
 import java.awt.Graphics;
-
+import java.util.Random;
 
 public class Bola extends Thread {
 
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
-    private int diametro;
+    protected int diametro;
 
     protected int velocidadX;
     protected int velocidadY;
 
     protected Color color;
 
-    private boolean activa;
+    protected boolean activa;
 
+    protected Paleta izquierda;
+    protected Paleta derecha;
 
-    private Paleta izquierda;
-    private Paleta derecha;
-
-    private int anchoPanel;
-    private int altoPanel;
+    protected int anchoPanel;
+    protected int altoPanel;
 
     protected int puntos;
+
+    protected boolean fantasmaUsado;
+    protected boolean congelanteUsado;
+    private Random random;
+    private boolean atravesandoFantasma = false;
 
     public Bola(int x, int y) {
 
@@ -45,30 +49,57 @@ public class Bola extends Thread {
         velocidadX = 4;
         velocidadY = 4;
 
+        random = new Random();
+
+        if(random.nextBoolean()){
+            velocidadX *= -1;
+        }
+
+        if(random.nextBoolean()){
+            velocidadY *= -1;
+        }
+
         color = Color.WHITE;
 
         puntos = 1;
-        
+
         activa = true;
 
+        fantasmaUsado = false;
+        congelanteUsado = false;
     }
+
+
     public Bola(int x, int y, int velocidad) {
 
-    this.x = x;
-    this.y = y;
+        this.x = x;
+        this.y = y;
 
-    diametro = 20;
+        diametro = 20;
 
-    velocidadX = velocidad;
-    velocidadY = velocidad;
+        velocidadX = velocidad;
+        velocidadY = velocidad;
 
-    color = Color.WHITE;
+        random = new Random();
 
-    puntos = 1;
+        if(random.nextBoolean()){
+            velocidadX *= -1;
+        }
 
-    activa = true;
+        if(random.nextBoolean()){
+            velocidadY *= -1;
+        }
 
-   }
+        color = Color.WHITE;
+
+        puntos = 1;
+
+        activa = true;
+
+        fantasmaUsado = false;
+
+    }
+
 
 
     public void configurarJuego(
@@ -88,52 +119,40 @@ public class Bola extends Thread {
 
 
 
-
     @Override
-    public void run() {
+    public void run(){
 
-
-        while(activa) {
-
+        while(activa){
 
             mover();
 
-
-            try {
+            try{
 
                 Thread.sleep(15);
 
-            } catch (InterruptedException e) {
+            }catch(InterruptedException e){
 
-                System.out.println("Hilo de bola detenido");
+                activa = false;
 
             }
 
-
         }
 
-
     }
 
 
-    public void cambiarVelocidad(int velocidad){
-
-    velocidadX = velocidad;
-    velocidadY = velocidad;
-
-    }
 
 
-    private void mover() {
-
+    protected void mover(){
 
         x += velocidadX;
         y += velocidadY;
 
 
 
-        // Rebote arriba
-        if(y <= 0) {
+        // Rebote superior
+
+        if(y <= 0){
 
             y = 0;
             velocidadY = Math.abs(velocidadY);
@@ -142,9 +161,9 @@ public class Bola extends Thread {
 
 
 
-        // Rebote abajo
-        if(y >= altoPanel - diametro) {
+        // Rebote inferior
 
+        if(y + diametro >= altoPanel){
 
             y = altoPanel - diametro;
             velocidadY = -Math.abs(velocidadY);
@@ -154,108 +173,217 @@ public class Bola extends Thread {
 
 
 
+        // Colisión izquierda
 
-        // Rebote paleta izquierda
-
-        if(izquierda != null &&
-           velocidadX < 0 &&
-           x <= izquierda.getX() + izquierda.getAncho() &&
-           x + diametro >= izquierda.getX() &&
-           y + diametro >= izquierda.getY() &&
-           y <= izquierda.getY() + izquierda.getAlto()) {
-
+       if(izquierda != null &&
+        !atravesandoFantasma &&
+        velocidadX < 0 &&
+        x <= izquierda.getX()+izquierda.getAncho() &&
+        x+diametro >= izquierda.getX() &&
+        y+diametro >= izquierda.getY() &&
+        y <= izquierda.getY()+izquierda.getAlto()){
 
 
-            x = izquierda.getX() + izquierda.getAncho();
+   if(esFantasma() && !fantasmaUsado){
 
-            velocidadX = Math.abs(velocidadX);
+    fantasmaUsado = true;
 
+    atravesandoFantasma = true;
+
+    new Thread(() -> {
+
+        try {
+            Thread.sleep(300);
+        } catch(Exception e){
+
+        }
+
+        atravesandoFantasma = false;
+
+    }).start();
+
+
+}else{
+
+
+        x = izquierda.getX()+izquierda.getAncho();
+
+
+        if(esCongelante() && usarCongelante()){
+
+            derecha.congelar();
 
         }
 
 
+        velocidadX = Math.abs(velocidadX);
+
+
+    }
+
+}
 
 
 
-        // Rebote paleta derecha
+
+
+        // Colisión derecha
 
         if(derecha != null &&
-           velocidadX > 0 &&
-           x + diametro >= derecha.getX() &&
-           x <= derecha.getX() + derecha.getAncho() &&
-           y + diametro >= derecha.getY() &&
-           y <= derecha.getY() + derecha.getAlto()) {
+        !atravesandoFantasma &&       
+        velocidadX > 0 &&
+        x+diametro >= derecha.getX() &&
+        x <= derecha.getX()+derecha.getAncho() &&
+        y+diametro >= derecha.getY() &&
+        y <= derecha.getY()+derecha.getAlto()){
 
 
+    if(esFantasma() && !fantasmaUsado){
 
-            x = derecha.getX() - diametro;
+    fantasmaUsado = true;
 
-            velocidadX = -Math.abs(velocidadX);
+    atravesandoFantasma = true;
 
+    new Thread(() -> {
+
+        try {
+            Thread.sleep(300);
+        } catch(Exception e){
+
+        }
+
+        atravesandoFantasma = false;
+
+    }).start();
+
+
+}else{
+
+
+        x = derecha.getX()-diametro;
+
+
+        if(esCongelante() && usarCongelante()){
+
+            izquierda.congelar();
 
         }
 
 
+        velocidadX = -Math.abs(velocidadX);
+
+
+    }
+
+}
 
 
 
-        // Sale por los lados
 
-        if(x < 0 || x > anchoPanel) {
 
-        x = anchoPanel / 2;
-        y = altoPanel / 2;
+        // Sale por izquierda o derecha
+
+        if(x < 0 || x > anchoPanel){
+
+    activa = false;
+
+    }
 
     }
 
 
 
-    }
 
 
-
-
-
-
-    public void dibujar(Graphics g) {
-
+    public void dibujar(Graphics g){
 
         g.setColor(color);
 
-        g.fillOval(x, y, diametro, diametro);
-
+        g.fillOval(x,y,diametro,diametro);
 
     }
+
+
+
+
+
+    public void aumentarVelocidad(){
+
+        velocidadX *= 2;
+        velocidadY *= 2;
+
+    }
+
+
+
 
     public int getPuntos(){
 
-    return puntos;
+        return puntos;
+
+    }
+
+
+
+    public String getTipo(){
+
+        return "Normal";
+
+    }
+
+
+
+
+    public boolean esFantasma(){
+
+        return false;
+
+    }
+
+
+
+    public boolean esCongelante(){
+
+        return false;
+
+    }
+
+
+
+
+    public void detener(){
+
+        activa = false;
+
+    }
+
+
+
+    public int getX(){
+
+        return x;
+
+    }
+
+
+    public int getY(){
+
+        return y;
 
     }
     
-    public String getTipo(){
+    public boolean usarCongelante(){
 
-    return "Normal";
+    if(!congelanteUsado){
+
+        congelanteUsado = true;
+
+        return true;
 
     }
- public void aumentarVelocidad(){
 
-    velocidadX *= 2;
-    velocidadY *= 2;
-
-}
-
-
-public boolean esFantasma(){
 
     return false;
 
-}
-
-
-public boolean esCongelante(){
-
-    return false;
-
-}
+    }
 }

@@ -10,31 +10,33 @@ package modelo;
  */
 import java.awt.Color;
 
+
 public class BolaFantasma extends Bola {
 
 
-    public BolaFantasma(int x, int y) {
+    public BolaFantasma(int x,int y){
 
-        super(x, y);
+        super(x,y);
+
+        color = Color.MAGENTA;
+
+    }
+
+
+
+    public BolaFantasma(int x,int y,int velocidad){
+
+        super(x,y,velocidad);
 
         color = Color.MAGENTA;
 
     }
 
-
-
-    public BolaFantasma(int x, int y, int velocidad) {
-
-        super(x, y, velocidad);
-
-        color = Color.MAGENTA;
-
-    }
 
 
 
     @Override
-    public boolean esFantasma() {
+    public boolean esFantasma(){
 
         return true;
 
@@ -42,11 +44,13 @@ public class BolaFantasma extends Bola {
 
 
 
+
     @Override
-    public String getTipo() {
+    public String getTipo(){
 
         return "Bola Fantasma";
 
     }
+
 
 }

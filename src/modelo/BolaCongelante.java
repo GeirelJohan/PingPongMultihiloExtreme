@@ -10,31 +10,34 @@ package modelo;
  */
 import java.awt.Color;
 
+
 public class BolaCongelante extends Bola {
 
 
-    public BolaCongelante(int x, int y) {
 
-        super(x, y);
+    public BolaCongelante(int x,int y){
+
+        super(x,y);
+
+        color = Color.CYAN;
+
+    }
+
+
+
+    public BolaCongelante(int x,int y,int velocidad){
+
+        super(x,y,velocidad);
 
         color = Color.CYAN;
 
     }
 
-
-
-    public BolaCongelante(int x, int y, int velocidad) {
-
-        super(x, y, velocidad);
-
-        color = Color.CYAN;
-
-    }
 
 
 
     @Override
-    public boolean esCongelante() {
+    public boolean esCongelante(){
 
         return true;
 
@@ -42,11 +45,13 @@ public class BolaCongelante extends Bola {
 
 
 
+
     @Override
-    public String getTipo() {
+    public String getTipo(){
 
         return "Bola Congelante";
 
     }
+
 
 }
