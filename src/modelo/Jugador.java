@@ -2,21 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
+
 package modelo;
 
+import java.util.concurrent.atomic.AtomicInteger;
 /**
  *
  * @author fiore
  */
 public class Jugador {
     private String nombre; 
-    private int puntos;
+    private AtomicInteger puntos;
     private int rondasGanadas;
     
     
     public Jugador (String nombre) {
         this.nombre = nombre;
-        this.puntos = 0;
+        this.puntos = new AtomicInteger(0);
         this.rondasGanadas = 0;
     }
     
@@ -25,7 +28,7 @@ public class Jugador {
     }
     
     public int getPuntos (){
-        return puntos;
+        return puntos.get();
     }
     
     public int getRondasGanadas (){
@@ -33,11 +36,11 @@ public class Jugador {
     }
     
     public void sumarPuntos (int p){
-        puntos += p;
+        puntos.addAndGet(p);
     }
     
     public void reiniciarPuntos(){
-        puntos = 0;
+        puntos.set(0);
     }
     
     public void ganarRonda(){
