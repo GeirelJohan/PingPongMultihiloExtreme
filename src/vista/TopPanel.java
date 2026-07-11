@@ -95,6 +95,7 @@ public void actualizarJugador2(String nombre) {
 }
 public void actualizarPuntos(int puntos){
     lblPuntos1.setText("Puntos: " + puntos);
+    System.out.println("Jugador 1 puntos: " + puntos); 
 }
 public void actualizarPuntos2(int  puntos){
     lblPuntos2.setText("Puntos: " + puntos);

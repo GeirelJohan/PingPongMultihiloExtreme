@@ -9,7 +9,7 @@ package vista;
  * @author Geirel
  */
 import controlador.KeyboardController;
-
+import vista.GamePanel;
 public class GameFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameFrame.class.getName());
@@ -23,8 +23,8 @@ public class GameFrame extends javax.swing.JFrame {
     public GameFrame() {
         initComponents();
         topPanel = new TopPanel();
-        gamePanel = new GamePanel();
-        bottomPanel = new BottomPanel();
+        gamePanel = new GamePanel(topPanel);
+        bottomPanel = new BottomPanel(gamePanel);
 
         topContainer.setLayout(new java.awt.BorderLayout());
         gameContainer.setLayout(new java.awt.BorderLayout());

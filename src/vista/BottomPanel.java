@@ -11,12 +11,18 @@ package vista;
 import javax.swing.JButton;
 
 public class BottomPanel extends javax.swing.JPanel {
+    
+    private GamePanel gamePanel;
 
     /**
      * Creates new form BottomPanel
      */
-    public BottomPanel() {
+    public BottomPanel(GamePanel gamePanel) {
         initComponents();
+        this.gamePanel=gamePanel;
+        btnIniciar.addActionListener(e-> gamePanel.reanudarJuego());
+        btnPausar.addActionListener(e-> gamePanel.pausarJuego());
+        btnReiniciar.addActionListener(e-> gamePanel.reiniciarJuego());
     }
     
     public JButton getBtnIniciar() {
@@ -98,14 +104,17 @@ nerated by the Form Editor.
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        gamePanel.reanudarJuego();       
         System.out.println("Boton Iniciar");
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnPausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPausarActionPerformed
+        gamePanel.pausarJuego(); 
         System.out.println("Boton Pausar");
     }//GEN-LAST:event_btnPausarActionPerformed
 
     private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
+        gamePanel.reiniciarJuego(); 
         System.out.println("Boton Reiniciar");
     }//GEN-LAST:event_btnReiniciarActionPerformed
 

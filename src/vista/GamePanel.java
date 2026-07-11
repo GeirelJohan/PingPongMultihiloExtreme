@@ -11,6 +11,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JOptionPane;
 import modelo.Dificultad;
 import modelo.GeneradorBolas;
+import modelo.Jugador;
+import java.awt.Color;
+import java.awt.Font;
+
 /**
  *
  * @author Geirel
@@ -27,12 +31,20 @@ public class GamePanel extends javax.swing.JPanel {
     private GeneradorBolas generador;
     private Timer timerGenerador;
     private boolean juegoActivo = true;
+    
+    private Jugador jugador1;
+    private Jugador jugador2;
+    private TopPanel topPanel;
     /**
      * Creates new form GamePanelñ
      */
-    public GamePanel() {
+    public GamePanel(TopPanel topPanel) {
+    this.topPanel=topPanel;
 
     initComponents();
+    
+    jugador1 = new Jugador ("Jugador Izquierdo");
+    jugador2 = new Jugador ("Jugador Derecho");
 
     setPreferredSize(new java.awt.Dimension(900,470));
     setSize(900,470);
@@ -77,7 +89,11 @@ for(int i = 0; i < dificultad.getCantidadMaxBolas() / 2; i++){
             paletaIzquierda,
             paletaDerecha,
             900,
-            420
+            470,
+            jugador1,
+            jugador2,
+            this
+            
     );
 
     bolas.add(bola);
@@ -90,18 +106,15 @@ for(int i = 0; i < dificultad.getCantidadMaxBolas() / 2; i++){
     timer = new Timer(15, e -> {
 
     if(juegoActivo){
-
-
-        eliminarBolasInactivas();
+        
+        //eliminarBolasInactivas();
 
         repaint();
-
     }
 
 });
-
-
     timer.start();
+    
     timerGenerador = new Timer(
         dificultad.getTiempoAparicion(),
         e -> {
@@ -118,7 +131,10 @@ for(int i = 0; i < dificultad.getCantidadMaxBolas() / 2; i++){
                         paletaIzquierda,
                         paletaDerecha,
                         900,
-                        420
+                        470,
+                        jugador1,
+                        jugador2,
+                        this
                 );
 
                 bolas.add(nueva);
@@ -150,8 +166,41 @@ protected void paintComponent(Graphics g) {
         bola.dibujar(g);
 
     }
+ 
 
 }
+public void pausarJuego(){
+    juegoActivo = false ;
+    for(Bola b:bolas){
+        b.pausar();
+    }
+}
+public void reanudarJuego(){
+    juegoActivo = true ;
+    for(Bola b:bolas){
+        b.reanudar();
+    }
+    this.requestFocusInWindow();
+}
+public void reiniciarJuego(){
+    juegoActivo = true ;
+    for(Bola b:bolas){
+        b.detener();
+    }
+    bolas.clear();
+    jugador1.reiniciarPuntos();
+    jugador2.reiniciarPuntos();
+if (topPanel !=null){
+    topPanel.actualizarPuntos(0);
+    topPanel.actualizarPuntos2(0);
+}
+this.requestFocusInWindow();
+}
+public TopPanel getTopPanel(){
+    return topPanel;
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,7 +249,7 @@ private void aplicarEfectosBolas(){
 }
     private void eliminarBolasInactivas(){
 
-    bolas.removeIf(bola -> !bola.isAlive());
+    bolas.removeIf(bola -> !bola.isActiva());
 
 }
     @SuppressWarnings("unchecked")

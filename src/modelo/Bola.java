@@ -11,6 +11,7 @@ package modelo;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
+import vista.GamePanel;
 
 public class Bola extends Thread {
 
@@ -38,6 +39,11 @@ public class Bola extends Thread {
     protected boolean congelanteUsado;
     private Random random;
     private boolean atravesandoFantasma = false;
+    
+    private Jugador jugadorIzq;
+    private Jugador jugadorDer;
+    private volatile boolean pausado =false;
+    private GamePanel gamePanel;
 
     public Bola(int x, int y) {
 
@@ -74,6 +80,7 @@ public class Bola extends Thread {
 
         this.x = x;
         this.y = y;
+        this.activa = true;
 
         diametro = 20;
 
@@ -106,7 +113,11 @@ public class Bola extends Thread {
             Paleta izquierda,
             Paleta derecha,
             int anchoPanel,
-            int altoPanel) {
+            int altoPanel,
+            Jugador jugadorIzq,
+            Jugador jugadorDer,
+            GamePanel gamePanel)
+    {
 
 
         this.izquierda = izquierda;
@@ -114,6 +125,10 @@ public class Bola extends Thread {
 
         this.anchoPanel = anchoPanel;
         this.altoPanel = altoPanel;
+        
+        this.jugadorIzq= jugadorIzq;
+        this.jugadorDer = jugadorDer;
+        this.gamePanel = gamePanel ;
 
     }
 
@@ -121,10 +136,13 @@ public class Bola extends Thread {
 
     @Override
     public void run(){
+        System.out.println("Hilo de bola iniciado");
+
 
         while(activa){
-
-            mover();
+            if (!pausado){
+                mover();
+            }
 
             try{
 
@@ -133,7 +151,6 @@ public class Bola extends Thread {
             }catch(InterruptedException e){
 
                 activa = false;
-
             }
 
         }
@@ -145,10 +162,9 @@ public class Bola extends Thread {
 
     protected void mover(){
 
+
         x += velocidadX;
         y += velocidadY;
-
-
 
         // Rebote superior
 
@@ -156,6 +172,7 @@ public class Bola extends Thread {
 
             y = 0;
             velocidadY = Math.abs(velocidadY);
+            System.out.println("x=" + x + " anchoPanel=" + anchoPanel);
 
         }
 
@@ -222,7 +239,29 @@ public class Bola extends Thread {
     }
 
 }
+if(x <0 ){
+    
+  jugadorDer.sumarPuntos(1);
 
+    //if (jugadorDer != null) jugadorDer.sumarPuntos(puntos);
+    if (gamePanel != null && gamePanel.getTopPanel
+        ()!= null){
+     gamePanel.getTopPanel().actualizarPuntos2(jugadorDer.getPuntos());
+    }
+    activa= false;
+}
+    if(x >anchoPanel ){
+        jugadorIzq.sumarPuntos(1);
+
+
+    //if (jugadorIzq != null) jugadorIzq.sumarPuntos(puntos);
+    
+    if (gamePanel != null && gamePanel.getTopPanel
+        ()!= null){
+     gamePanel.getTopPanel().actualizarPuntos(jugadorIzq.getPuntos());
+    }
+     activa= false;
+}
 
 
 
@@ -276,10 +315,7 @@ public class Bola extends Thread {
     }
 
 }
-
-
-
-
+      
 
         // Sale por izquierda o derecha
 
@@ -290,9 +326,9 @@ public class Bola extends Thread {
     }
 
     }
-
-
-
+    public boolean isActiva (){
+        return activa ;
+    }
 
 
     public void dibujar(Graphics g){
@@ -302,9 +338,6 @@ public class Bola extends Thread {
         g.fillOval(x,y,diametro,diametro);
 
     }
-
-
-
 
 
     public void aumentarVelocidad(){
@@ -332,8 +365,6 @@ public class Bola extends Thread {
     }
 
 
-
-
     public boolean esFantasma(){
 
         return false;
@@ -357,7 +388,12 @@ public class Bola extends Thread {
 
     }
 
-
+    public void pausar(){
+        pausado =true;
+    }
+    public void reanudar(){
+        pausado =false;
+    }
 
     public int getX(){
 
@@ -386,4 +422,6 @@ public class Bola extends Thread {
     return false;
 
     }
+    
+    
 }
