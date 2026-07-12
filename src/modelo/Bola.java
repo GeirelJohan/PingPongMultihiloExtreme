@@ -131,12 +131,11 @@ public class Bola extends Thread {
         this.gamePanel = gamePanel ;
 
     }
-
+    
 
 
     @Override
     public void run(){
-        System.out.println("Hilo de bola iniciado");
 
 
         while(activa){
@@ -153,14 +152,15 @@ public class Bola extends Thread {
                 activa = false;
             }
 
-        }
+
+    }
 
     }
 
 
 
 
-    protected void mover(){
+    public void mover(){
 
 
         x += velocidadX;
@@ -172,8 +172,6 @@ public class Bola extends Thread {
 
             y = 0;
             velocidadY = Math.abs(velocidadY);
-            System.out.println("x=" + x + " anchoPanel=" + anchoPanel);
-
         }
 
 
@@ -186,9 +184,6 @@ public class Bola extends Thread {
             velocidadY = -Math.abs(velocidadY);
 
         }
-
-
-
 
         // Colisión izquierda
 
@@ -223,7 +218,7 @@ public class Bola extends Thread {
 }else{
 
 
-        x = izquierda.getX()+izquierda.getAncho();
+        x = izquierda.getX()+izquierda.getAncho()+1;
 
 
         if(esCongelante() && usarCongelante()){
@@ -234,37 +229,32 @@ public class Bola extends Thread {
 
 
         velocidadX = Math.abs(velocidadX);
-
+        x+=2;
 
     }
 
 }
-if(x <0 ){
+if(x < -diametro ){
     
-  jugadorDer.sumarPuntos(1);
+  jugadorDer.sumarPuntos(puntos);
 
-    //if (jugadorDer != null) jugadorDer.sumarPuntos(puntos);
     if (gamePanel != null && gamePanel.getTopPanel
         ()!= null){
      gamePanel.getTopPanel().actualizarPuntos2(jugadorDer.getPuntos());
     }
     activa= false;
+     return;
 }
-    if(x >anchoPanel ){
-        jugadorIzq.sumarPuntos(1);
-
-
-    //if (jugadorIzq != null) jugadorIzq.sumarPuntos(puntos);
+    if(x > anchoPanel ){
+        jugadorIzq.sumarPuntos(puntos);
     
     if (gamePanel != null && gamePanel.getTopPanel
         ()!= null){
      gamePanel.getTopPanel().actualizarPuntos(jugadorIzq.getPuntos());
     }
      activa= false;
+     return;
 }
-
-
-
 
         // Colisión derecha
 
@@ -299,7 +289,7 @@ if(x <0 ){
 }else{
 
 
-        x = derecha.getX()-diametro;
+        x = derecha.getX()-diametro-1;
 
 
         if(esCongelante() && usarCongelante()){
@@ -310,6 +300,7 @@ if(x <0 ){
 
 
         velocidadX = -Math.abs(velocidadX);
+        x-=2;
 
 
     }
@@ -319,12 +310,6 @@ if(x <0 ){
 
         // Sale por izquierda o derecha
 
-        if(x < 0 || x > anchoPanel){
-
-    activa = false;
-
-    }
-
     }
     public boolean isActiva (){
         return activa ;
@@ -332,6 +317,7 @@ if(x <0 ){
 
 
     public void dibujar(Graphics g){
+        if (!activa) return;
 
         g.setColor(color);
 

@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package modelo;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -23,7 +24,6 @@ public class Paleta {
 
     private int velocidad = 10;
 
-    private int velocidadNormal = 10;
 
     private boolean congelada;
 
@@ -35,6 +35,7 @@ public class Paleta {
         this.y = y;
 
         congelada = false;
+        velocidad=10;
 
     }
 

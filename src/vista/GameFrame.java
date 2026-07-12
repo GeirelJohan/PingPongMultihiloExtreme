@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+
 package vista;
 
 /**
@@ -10,6 +11,9 @@ package vista;
  */
 import controlador.KeyboardController;
 import vista.GamePanel;
+import javax.swing.*;
+import java.awt.*;
+
 public class GameFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameFrame.class.getName());
@@ -20,11 +24,15 @@ public class GameFrame extends javax.swing.JFrame {
     private GamePanel gamePanel;
     private BottomPanel bottomPanel;
     
-    public GameFrame() {
+    public GameFrame(String nombre1,String nombre2) {
         initComponents();
+        
         topPanel = new TopPanel();
-        gamePanel = new GamePanel(topPanel);
+        gamePanel = new GamePanel(topPanel,nombre1,nombre2);
         bottomPanel = new BottomPanel(gamePanel);
+        // Agregar al frame
+        //add(topPanel, BorderLayout.NORTH);   // 🔑 nombres y puntos arriba
+        //add(gamePanel, BorderLayout.CENTER);
 
         topContainer.setLayout(new java.awt.BorderLayout());
         gameContainer.setLayout(new java.awt.BorderLayout());
@@ -33,6 +41,10 @@ public class GameFrame extends javax.swing.JFrame {
         topContainer.add(topPanel);
         gameContainer.add(gamePanel);
         bottomContainer.add(bottomPanel);
+        
+        topPanel.setPreferredSize(new java.awt.Dimension(900, 70));
+    gamePanel.setPreferredSize(new java.awt.Dimension(900, 470));
+    bottomPanel.setPreferredSize(new java.awt.Dimension(900, 60));
 
         KeyboardController keyboardController = new KeyboardController(gamePanel);
 
@@ -43,6 +55,7 @@ public class GameFrame extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
     }
+    
     
     public TopPanel getTopPanel() {
     return topPanel;
@@ -55,6 +68,8 @@ public class GameFrame extends javax.swing.JFrame {
     public BottomPanel getBottomPanel() {
         return bottomPanel;
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,7 +158,7 @@ public class GameFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GameFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GameFrame("Jugador 1","Jugador 2").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
