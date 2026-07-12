@@ -13,6 +13,9 @@ import controlador.KeyboardController;
 import vista.GamePanel;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import modelo.Jugador;
 
 public class GameFrame extends javax.swing.JFrame {
     
@@ -23,6 +26,8 @@ public class GameFrame extends javax.swing.JFrame {
     private TopPanel topPanel;
     private GamePanel gamePanel;
     private BottomPanel bottomPanel;
+    private Timer timer;
+    private int tiempoRestante = 60;
     
     public GameFrame(String nombre1,String nombre2) {
         initComponents();
@@ -30,10 +35,7 @@ public class GameFrame extends javax.swing.JFrame {
         topPanel = new TopPanel();
         gamePanel = new GamePanel(topPanel,nombre1,nombre2);
         bottomPanel = new BottomPanel(gamePanel);
-        // Agregar al frame
-        //add(topPanel, BorderLayout.NORTH);   // 🔑 nombres y puntos arriba
-        //add(gamePanel, BorderLayout.CENTER);
-
+        
         topContainer.setLayout(new java.awt.BorderLayout());
         gameContainer.setLayout(new java.awt.BorderLayout());
         bottomContainer.setLayout(new java.awt.BorderLayout());
@@ -41,6 +43,39 @@ public class GameFrame extends javax.swing.JFrame {
         topContainer.add(topPanel);
         gameContainer.add(gamePanel);
         bottomContainer.add(bottomPanel);
+        
+        iniciarCronometro();
+        setLocationRelativeTo(null);
+    } 
+    private void iniciarCronometro(){
+        timer = new Timer (1000, new ActionListener(){
+            @Override
+            public void actionPerformed (ActionEvent e){
+                tiempoRestante--;
+                topPanel.actualizarTiempo(tiempoRestante);
+                if (tiempoRestante <= 0){
+                    timer.stop();
+                    mostrarGanador();
+                }
+            }
+            
+        });
+        timer.start();
+    }
+    private void mostrarGanador(){
+        int puntos1 = gamePanel.getJugador1().getPuntos();
+        int puntos2 = gamePanel.getJugador2().getPuntos();
+        String mensaje;
+        if (puntos1 > puntos2){
+            mensaje = "¡Ganó!"+gamePanel.getJugador1().getNombre()+"!";
+        }else if (puntos2 > puntos1){
+            mensaje = "¡Ganó!"+gamePanel.getJugador2().getNombre()+"!";
+            
+        }else{
+            mensaje = "¡Empate!";
+        }
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje);
+      
         
         topPanel.setPreferredSize(new java.awt.Dimension(900, 70));
     gamePanel.setPreferredSize(new java.awt.Dimension(900, 470));
@@ -68,6 +103,8 @@ public class GameFrame extends javax.swing.JFrame {
     public BottomPanel getBottomPanel() {
         return bottomPanel;
     }
+   
+    
     
     
     /**

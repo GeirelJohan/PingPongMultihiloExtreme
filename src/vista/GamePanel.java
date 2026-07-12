@@ -260,8 +260,22 @@ private void aplicarEfectosBolas(){
         if (eliminadas){
             repaint();
         }
+    }
+        public Jugador getJugador1(){
+            return jugador1;
+        }
+        public Jugador getJugador2(){
+            return jugador2;
+        }
+        public Paleta getPaletaIzquierda(){
+        return paletaIzquierda;
+    }
+    
+    public Paleta getPaletaDerecha(){
+        return paletaDerecha;
+    }
 
-}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -287,13 +301,7 @@ private void aplicarEfectosBolas(){
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    public Paleta getPaletaIzquierda(){
-        return paletaIzquierda;
-    }
     
-    public Paleta getPaletaDerecha(){
-        return paletaDerecha;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
