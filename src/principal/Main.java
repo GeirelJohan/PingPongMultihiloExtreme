@@ -21,7 +21,8 @@ public class Main {
             if (dialog.isIniciar()) {
                 String nombre1 = dialog.getJugador1();
                 String nombre2 = dialog.getJugador2();
-                GameFrame frame = new GameFrame(nombre1, nombre2);
+                String dificultad = dialog.getDificultad();
+                GameFrame frame = new GameFrame(nombre1, nombre2,dificultad);
                 frame.setVisible(true);
             }
         });

@@ -31,7 +31,8 @@ public class GamePanel extends javax.swing.JPanel {
     private Paleta paletaDerecha;
     private CopyOnWriteArrayList<Bola> bolas;
     private Timer timer;
-    private Dificultad dificultad;
+    //private Dificultad dificultad;
+    private String dificultad;
     private GeneradorBolas generador;
     private Timer timerGenerador;
     private boolean juegoActivo = true;
@@ -39,13 +40,56 @@ public class GamePanel extends javax.swing.JPanel {
     private Jugador jugador1;
     private Jugador jugador2;
     private TopPanel topPanel;
+    private int velocidadPelota;
+
     /**
      * Creates new form GamePanelñ
      */
-    public GamePanel(TopPanel topPanel,String nombre1,String nombre2) {
+    public GamePanel(TopPanel topPanel,String nombre1,String nombre2, String dificultad) {
     this.topPanel=topPanel;
+    this.jugador1=new Jugador(nombre1);
+    this.jugador2 = new Jugador (nombre2);
+    this.dificultad=dificultad;
 
     initComponents();
+    
+    switch (dificultad){
+        case "Fácil":
+            velocidadPelota = 3;
+            break;
+        case "Medio":
+            velocidadPelota = 6;
+            break;
+        case "Extremo":
+            velocidadPelota=10;
+            break;
+        default:
+            velocidadPelota = 5 ;
+    }
+    int cantidadMaxBolas;
+    int tiempoAparicion;
+    
+    switch (dificultad){
+        case "Fácil":
+            cantidadMaxBolas= 6;
+            tiempoAparicion = 3000;
+            break;
+        case "Normal":
+            cantidadMaxBolas= 10;
+            tiempoAparicion = 2000;
+            break;
+        case "Difícil":
+            cantidadMaxBolas= 12;
+            tiempoAparicion = 1500;
+            break;    
+        case "Extremo":
+            cantidadMaxBolas= 14;
+            tiempoAparicion = 1000;
+            break;    
+        default :
+            cantidadMaxBolas = 8;
+            tiempoAparicion =2500;
+    }
 
     jugador1 = new Jugador (nombre1);
     jugador2 = new Jugador (nombre2);
@@ -68,31 +112,19 @@ bolas = new CopyOnWriteArrayList<>();
 
 generador = new GeneradorBolas();
 
-String opcion = (String) JOptionPane.showInputDialog(
-        this,
-        "Seleccione la dificultad",
-        "Dificultad",
-        JOptionPane.QUESTION_MESSAGE,
-        null,
-        new String[]{"Facil", "Normal", "Dificil", "Extremo"},
-        "Normal"
-);
 
-if(opcion == null){
-    opcion = "Normal";
-}
 
-dificultad = new Dificultad(opcion);
+
 
 
 // Crear las bolas iniciales según la dificultad
 
-for(int i = 0; i < dificultad.getCantidadMaxBolas() / 2; i++){
+for(int i = 0; i < cantidadMaxBolas / 2; i++){
 
     Bola bola = generador.crearBola(
             440,
             225,
-            dificultad
+            velocidadPelota
     );
 
     bola.configurarJuego(
@@ -125,15 +157,15 @@ for(int i = 0; i < dificultad.getCantidadMaxBolas() / 2; i++){
     timer.start();
     
     timerGenerador = new Timer(
-        dificultad.getTiempoAparicion(),
+        tiempoAparicion,
         e -> {
 
-            if(bolas.size() < dificultad.getCantidadMaxBolas()){
+            if(bolas.size() < cantidadMaxBolas){
 
                 Bola nueva = generador.crearBola(
                         440,
                         225,
-                        dificultad
+                        velocidadPelota
                 );
 
                 nueva.configurarJuego(

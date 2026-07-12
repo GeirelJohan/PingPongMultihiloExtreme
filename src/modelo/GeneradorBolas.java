@@ -26,12 +26,9 @@ public class GeneradorBolas {
 
 
 
-    public Bola crearBola(int x, int y, Dificultad dificultad){
-
+    public Bola crearBola(int x, int y,int velocidad){
 
         int tipo = random.nextInt(6);
-
-
 
         switch(tipo){
 
@@ -41,7 +38,7 @@ public class GeneradorBolas {
                 return new BolaNormal(
                         x,
                         y,
-                        dificultad.getVelocidadBola()
+                        velocidad
                 );
 
 
@@ -51,7 +48,7 @@ public class GeneradorBolas {
                 return new BolaNegativa(
                         x,
                         y,
-                        dificultad.getVelocidadBola()
+                        velocidad
                 );
 
 
@@ -61,7 +58,7 @@ public class GeneradorBolas {
                 return new BolaBonus(
                         x,
                         y,
-                        dificultad.getVelocidadBola()
+                        velocidad
                 );
 
 
@@ -71,7 +68,7 @@ public class GeneradorBolas {
                 return new BolaRapida(
                         x,
                         y,
-                        dificultad.getVelocidadBola()
+                        velocidad
                 );
 
 
@@ -81,7 +78,7 @@ public class GeneradorBolas {
                 return new BolaFantasma(
                         x,
                         y,
-                        dificultad.getVelocidadBola()
+                        velocidad
                 );
 
 
@@ -91,7 +88,7 @@ public class GeneradorBolas {
                 return new BolaCongelante(
                         x,
                         y,
-                        dificultad.getVelocidadBola()
+                        velocidad
                 );
 
 

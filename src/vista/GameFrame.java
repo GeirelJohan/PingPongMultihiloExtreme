@@ -28,17 +28,30 @@ public class GameFrame extends javax.swing.JFrame {
     private BottomPanel bottomPanel;
     private Timer timer;
     private int tiempoRestante = 60;
+    private StartDialog startDialog;
+    private int rondaActual = 1;
+    private int rondasJugador1=0;
+    private int rondasJugador2=0;
+    private final int TOTAL_RONDAS =3;
+    private java.util.List<Integer> puntosJugador1PorRonda = new java.util.ArrayList<>();
+      private java.util.List<Integer> puntosJugador2PorRonda = new java.util.ArrayList<>();
     
-    public GameFrame(String nombre1,String nombre2) {
+    public GameFrame(String nombre1,String nombre2, String dificultad) {
         initComponents();
         
-        topPanel = new TopPanel();
-        gamePanel = new GamePanel(topPanel,nombre1,nombre2);
-        bottomPanel = new BottomPanel(gamePanel);
+        //StartDialog startDialog = new StartDialog(this,true);
+       // startDialog.setVisible(true);
         
-        topContainer.setLayout(new java.awt.BorderLayout());
-        gameContainer.setLayout(new java.awt.BorderLayout());
-        bottomContainer.setLayout(new java.awt.BorderLayout());
+       // String dificultad = startDialog.getDificultad();
+        
+        topPanel = new TopPanel();
+        gamePanel = new GamePanel(topPanel,nombre1,nombre2,dificultad);
+        bottomPanel = new BottomPanel(gamePanel);
+        //startDialog = new StartDialog(this,true);
+        
+        topContainer.setLayout(new BorderLayout());
+        gameContainer.setLayout(new BorderLayout());
+        bottomContainer.setLayout(new BorderLayout());
 
         topContainer.add(topPanel);
         gameContainer.add(gamePanel);
@@ -46,7 +59,17 @@ public class GameFrame extends javax.swing.JFrame {
         
         iniciarCronometro();
         setLocationRelativeTo(null);
+        
+        KeyboardController keyboardController = new KeyboardController(gamePanel);
+
+        gamePanel.addKeyListener(keyboardController);
+
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow();
+
+        setLocationRelativeTo(null);
     } 
+    
     private void iniciarCronometro(){
         timer = new Timer (1000, new ActionListener(){
             @Override
@@ -62,33 +85,101 @@ public class GameFrame extends javax.swing.JFrame {
         });
         timer.start();
     }
+    private void  reiniciarRonda(){
+        tiempoRestante = 60;
+        topPanel.actualizarTiempo(tiempoRestante);
+        gamePanel.reiniciarJuego();
+        timer.start();
+        JOptionPane.showMessageDialog( this, "Comienza la ronda "+rondaActual+ "!");
+    }
+            
+            
     private void mostrarGanador(){
         int puntos1 = gamePanel.getJugador1().getPuntos();
         int puntos2 = gamePanel.getJugador2().getPuntos();
+        
+        puntosJugador1PorRonda.add(puntos1);
+        puntosJugador2PorRonda.add(puntos2);
+            
         String mensaje;
+        
         if (puntos1 > puntos2){
-            mensaje = "¡Ganó!"+gamePanel.getJugador1().getNombre()+"!";
+            rondasJugador1++;
+            mensaje = "!Ronda¡ "+ rondaActual + "ganada por"+ gamePanel.getJugador1().getNombre();
         }else if (puntos2 > puntos1){
-            mensaje = "¡Ganó!"+gamePanel.getJugador2().getNombre()+"!";
+            rondasJugador2++;
+            mensaje = "¡Ronda! "+ rondaActual + "ganada por"+gamePanel.getJugador2().getNombre()+"!";
             
         }else{
-            mensaje = "¡Empate!";
+            mensaje = "¡Ronda! "+ rondaActual +"¡Empate!";
         }
-        javax.swing.JOptionPane.showMessageDialog(this, mensaje);
-      
         
-        topPanel.setPreferredSize(new java.awt.Dimension(900, 70));
-    gamePanel.setPreferredSize(new java.awt.Dimension(900, 470));
-    bottomPanel.setPreferredSize(new java.awt.Dimension(900, 60));
+        mensaje += "\n\nPuntos Obtenidos : \n"+
+                gamePanel.getJugador1().getNombre()+":"+puntos1 + "\n"+
+                gamePanel.getJugador2().getNombre()+":"+puntos2 + "\n";
+        
+        JOptionPane.showMessageDialog(this, mensaje);
+      
+        if (rondaActual < TOTAL_RONDAS && rondasJugador1 < 2 && rondasJugador2<2){
+            rondaActual++;
+            reiniciarRonda();
+            
+        }else {
 
-        KeyboardController keyboardController = new KeyboardController(gamePanel);
+            mostrarResultadosFinales ();
+        }
 
-        gamePanel.addKeyListener(keyboardController);
+        
+    }
+    private void mostrarResultadosFinales (){
+        String ganadorPartida;
+        
+        if (rondasJugador1 >rondasJugador2){
+            ganadorPartida = gamePanel.getJugador1().getNombre();
+           
+        }else if (rondasJugador2 > rondasJugador1){
+            ganadorPartida = gamePanel.getJugador2().getNombre();
+        }else 
+            ganadorPartida = "Empate";
+    
+        
+        StringBuilder resumen = new StringBuilder ("Partida finalizada\n\n") ;
+        resumen.append ("Ganador de la partida :").append (ganadorPartida).append("\n");
+        resumen.append("Rondas ganadas:")
+                .append(gamePanel.getJugador1().getNombre()).append("(")
+                .append(rondasJugador1).append(")  |   ")
+                .append(gamePanel.getJugador2().getNombre()).append("(").append(rondasJugador2).append(")\n\n");
+        resumen.append("Puntos por ronda: \n");
+        for ( int i = 0; i < puntosJugador1PorRonda.size(); i++){
+            resumen.append("Ronda  ").append(i+1).append(":").append(gamePanel.getJugador1().getNombre()).append("").append(puntosJugador1PorRonda.get(i)).append("  |  ").append(gamePanel.getJugador2().getNombre()).append("").append(puntosJugador2PorRonda.get(i)).append("\n");
+        }
+  
+                //"Ganador de la partida:" + ganadorPartida + "\n" + 
+               // "Rondas ganadas:" + gamePanel.getJugador1().getNombre() + "("+rondasJugador1 +")| "+        gamePanel.getJugador2().getNombre()+ "("+rondasJugador2 +")";
+        
+        
+        int opcion = JOptionPane.showOptionDialog(this, resumen +"\n\n¿Quieres intentarlo de nuevo?", "Resultados finales",JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,null,new Object []{
+            "Volver a jugar","Salir"}, "Volver a jugar"
+        );
+        
+        if (opcion == JOptionPane.YES_OPTION){
+            rondaActual = 1;
+            rondasJugador1 = 0;
+            rondasJugador2 = 0;
+            puntosJugador1PorRonda.clear();
+            puntosJugador2PorRonda.clear();
+            tiempoRestante = 60;
+            topPanel.actualizarTiempo(tiempoRestante);
+            gamePanel.reiniciarJuego();
+            timer.start();
+            
+                    JOptionPane.showMessageDialog (this,"!Nueva partida iniciada¡");
+            
+        }else {
+        
+        dispose ();
 
-        gamePanel.setFocusable(true);
-        gamePanel.requestFocusInWindow();
-
-        setLocationRelativeTo(null);
+    }
     }
     
     
@@ -103,6 +194,7 @@ public class GameFrame extends javax.swing.JFrame {
     public BottomPanel getBottomPanel() {
         return bottomPanel;
     }
+    
    
     
     
@@ -195,7 +287,7 @@ public class GameFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GameFrame("Jugador 1","Jugador 2").setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GameFrame("Jugador 1","Jugador 2", "dificultad").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

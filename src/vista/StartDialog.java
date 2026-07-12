@@ -132,8 +132,11 @@ public class StartDialog extends javax.swing.JDialog {
     public String getJugador2() {
         return txtJugador2.getText();
     }
-    public String getDificultad() {
-        return cmbDificultad.getSelectedItem().toString();
+    public String getDificultad (){
+        return (String)cmbDificultad.getSelectedItem();
+    
+    //public String getDificultad() {
+    //    return cmbDificultad.getSelectedItem().toString();
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void cmbDificultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDificultadActionPerformed
