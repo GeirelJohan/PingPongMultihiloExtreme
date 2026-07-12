@@ -19,7 +19,10 @@ public class Main {
             StartDialog dialog = new StartDialog(null, true);
             dialog.setVisible(true);
             if (dialog.isIniciar()) {
-                GameFrame frame = new GameFrame();
+                String nombre1 = dialog.getJugador1();
+                String nombre2 = dialog.getJugador2();
+                String dificultad = dialog.getDificultad();
+                GameFrame frame = new GameFrame(nombre1, nombre2,dificultad);
                 frame.setVisible(true);
             }
         });

@@ -3,13 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package vista;
-
+import javax.swing.JLabel;
 /**
  *
  * @author Geirel
  */
 public class TopPanel extends javax.swing.JPanel {
-
+    
+    private JLabel labelJugador1;
+    private JLabel labelJugador2;
+    private int puntos1 =0;
+    
     /**
      * Creates new form TopPanel
      */
@@ -87,6 +91,28 @@ public class TopPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+public void actualizarJugador1(String nombre){
+    
+    lblJugador1.setText(nombre);
+    repaint();
+}
+public void actualizarJugador2(String nombre) {
+    lblJugadore2.setText(nombre);
+    repaint();
+}
+public void actualizarPuntos(int puntos){
+    lblPuntos1.setText("Puntos: " + puntos);
+    this.revalidate();
+    this.repaint();
+}
+public void actualizarPuntos2(int  puntos){
+    lblPuntos2.setText("Puntos: " + puntos);
+    this.revalidate();
+    this.repaint();
+}
+public void actualizarTiempo(int tiempo){
+    lblTiempo.setText("Tiempo: " + tiempo);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblJugador1;

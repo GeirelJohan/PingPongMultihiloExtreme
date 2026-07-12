@@ -2,17 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controlador;
 
+package controlador;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import modelo.Paleta;
+import vista.GamePanel;
+        
 /**
  *
  * @author Geirel
  */
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 
 public class KeyboardController implements KeyListener{
     
+    
+    private GamePanel gamePanel;
+    
+    public KeyboardController(GamePanel gamePanel){
+        this.gamePanel = gamePanel;
+    }
     //Metodo que se ejecuta cada vez que presiono una tecla 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -22,31 +32,41 @@ public class KeyboardController implements KeyListener{
     //Obtiene el codigo de la tecla presionada
     @Override
     public void keyPressed(KeyEvent e) {
+        
+        
+        Paleta izquierda = gamePanel.getPaletaIzquierda();
+        Paleta derecha = gamePanel.getPaletaDerecha();
+        
+        
         switch (e.getKeyCode()) {
             
             //Tecla W: movimiento hacia arriba del jugador 1
             case KeyEvent.VK_W:
-                System.out.println("Jugador 1 - Arriba");
+                izquierda.subir();
                 break;
             
             //Tecla S: movimiento hacia abajo del jugador 1
             case KeyEvent.VK_S:
-                System.out.println("Jugador 1 - Abajo");
+                izquierda.bajar(gamePanel.getHeight());
                 break;
                 
             //Flecha arriba: movimiento hacia arriba del jugador 2
             case KeyEvent.VK_UP:
-                System.out.println("Jugador 2 - Arriba");
+                derecha.subir();
                 break;
                 
             //Flecha abajo: movimiento hacia abajo del jugador 2
             case KeyEvent.VK_DOWN:
-                System.out.println("Jugador 2 - Abajo");
+                derecha.bajar(gamePanel.getHeight());
                 break;
         }
+        
+        gamePanel.repaint();
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
+    
+    
 }
